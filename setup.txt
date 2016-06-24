@@ -1,0 +1,79 @@
+# Include TS for css_styled_content system extension
+<INCLUDE_TYPOSCRIPT: source="FILE: EXT:css_styled_content/static/setup.txt">
+
+# fix image width content
+tt_content.image.20.maxW = 1920
+tt_content.image.20.maxWInText = 1920
+
+config.baseURL = http://localhost/www/typo3_english/
+
+pageTemplate {
+	
+  includeCSS {
+    my_style = fileadmin/typoscript/html/style/style.css
+    my_style {
+      media = screen
+      disableCompression = 1
+    }
+  }
+}
+
+# main menu configuration
+lib.mainMenu = COA
+lib.mainMenu {
+  10 = HMENU
+  10 {
+    entryLevel = 0
+
+    1 = TMENU
+    1 {
+        wrap = <ul id="menu"> | </ul>
+        noBlur = 1
+        expAll = 1
+        NO = 1
+        NO {
+            ATagTitle.field = title
+            wrapItemAndSub = <li> | </li> |*| <li>|</li> |*| <li>|</li>
+            stdWrap.htmlSpecialChars = 1
+            ATagBeforeWrap = 1
+        }
+
+        CUR = 1
+        CUR < .NO
+        CUR {
+        	ATagParams = class="current"
+            wrapItemAndSub = <li> | </li> |*| <li>|</li> |*| <li>|</li>
+        }
+		
+		ACT = 1
+        ACT < .NO
+        ACT {
+            wrapItemAndSub = <li class="first"> | </li> |*| <li class="middle">|</li> |*| <li>|</li>
+        }
+    }
+  }
+}
+pageTemplate = PAGE
+pageTemplate.10 = TEMPLATE
+pageTemplate.10.workOnSubpart = DOCUMENT_BODY
+pageTemplate.10 {
+  template = FILE
+  template.file = fileadmin/typoscript/html/index.html
+  template.file.stdWrap.cObject = CASE
+  template.file.stdWrap.cObject {
+     key.data = levelfield:-1, backend_layout_next_level, slide
+     key.override.field = backend_layout
+     default = TEXT
+     default.value = fileadmin/typoscript/html/index.html
+  } 
+  subparts {
+    
+    ## menu
+    MAIN_MENU = < lib.mainMenu
+    
+    ## main content
+    MAIN_CONTENT < styles.content.get
+    MAIN_CONTENT.select.where = colPos = 1
+    
+  }
+}

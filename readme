@@ -1,0 +1,6 @@
+Todo:
+include constants.txt
+<INCLUDE_TYPOSCRIPT: source="FILE:fileadmin/typoscript/constants.txt">
+
+include setup.txt
+<INCLUDE_TYPOSCRIPT: source="FILE:fileadmin/typoscript/setup.txt">

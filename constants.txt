@@ -1,0 +1,2 @@
+# Include TS constant for css_styled_content system extension
+<INCLUDE_TYPOSCRIPT: source="FILE: EXT:css_styled_content/static/constants.txt">
